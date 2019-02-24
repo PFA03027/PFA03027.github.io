@@ -6,6 +6,8 @@
 テーマは、「深層強化学習」
 ChainerとChainerrlを使って、強化学習の実験環境の作成と、実験環境を使ってのエージェントの作成を行っています。
 
+[My reinforcement learning agent and environment](https://github.com/PFA03027/twn_rl)
+
 ## 強化学習における環境
 自作環境です。OpenGymとかを知る前に作成を進めていたため、自作臭がぬぐえません。
 
@@ -32,9 +34,10 @@ ChainerとChainerrlを使って、強化学習の実験環境の作成と、実�
 ちなみに、強化学習対象から外した測距信号を処理する層(2層CNN＋全層結合1層の構成)は、AutoEncoderで学習させました。
 
 ## エージェントの実装について
-強化学習を担う層は、ChainerrlのDoubleDQNを使用しました。
-Experience Replayには、Chainerrlのreplay bufferの実装をもとに、成功体験、失敗体験に相当する経験を優先保持する自作bufferを使用。
-また、測距信号を処理する層は、ChainerのCNNを使用。CNN+reluの後にDropoutを挿入。Dropoutの出力をDeconvolutionし、AutoEncoderとしての学習を実施。
-CNN間の接続にPooling層を挿入する構成です。
+- Windows 10環境で、Anaconda3環境を構築。その上で、Chainer/Chainerrlを使用
+- 強化学習を担う層は、ChainerrlのDoubleDQNを使用。
+- Experience Replayには、Chainerrlのreplay bufferの実装をもとに、成功体験、失敗体験に相当する経験を優先保持する自作bufferを使用。
+- 測距信号を処理する層は、ChainerのCNNを使用。CNN+reluの後にDropoutを挿入。Dropoutの出力をDeconvolutionし、AutoEncoderとしての学習を実施。
+- CNN間の接続にPooling層を挿入する構成です。
 
 
