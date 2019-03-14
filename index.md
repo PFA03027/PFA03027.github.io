@@ -33,10 +33,24 @@ ChainerとChainerrlを使って、強化学習の実験環境の作成と、実�
 
 ちなみに、強化学習対象から外した測距信号を処理する層(2層CNN＋全層結合1層の構成)は、AutoEncoderで学習させました。
 
+### 強化学習層の構成検討
+#### アクション空間それぞれの学習層を持つ構成(Type3)での実験
+Type2よりもうまく学習（少ないエピソード数で目標達成）。アクションのQ値学習の独立性を高める構成には、意味があるといえる。
+今後は、Type3をベースに拡張していく。
+
+### Expence Replayの方式検討
+#### これまで
+- Experience Replayには、Chainerrlのreplay bufferの実装をもとに、成功体験、失敗体験に相当する経験を優先保持する自作bufferを使用。
+
+#### 今回 - アクション空間公正サンプリング方式
+Experience Replayからの学習データサンプリングをアクション空間の方向で公正（各アクション同じ数）に学習データをサンプリングする方式を導入。
+アクション空間を大きくしても、学習速度の低下を軽減。
+学習データのサンプリングにおいて、アクション空間方向での偏りを軽減できたためと思われる。
+- 離散空間で、9アクションから、25アクションに拡大
+
 ## エージェントの実装について
 - Windows 10環境で、Anaconda3環境を構築。その上で、Chainer/Chainerrlを使用
 - 強化学習を担う層は、ChainerrlのDoubleDQNを使用。
-- Experience Replayには、Chainerrlのreplay bufferの実装をもとに、成功体験、失敗体験に相当する経験を優先保持する自作bufferを使用。
 - 測距信号を処理する層は、ChainerのCNNを使用。CNN+reluの後にDropoutを挿入。Dropoutの出力をDeconvolutionし、AutoEncoderとしての学習を実施。
 - CNN間の接続にPooling層を挿入する構成です。
 
